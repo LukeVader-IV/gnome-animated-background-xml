@@ -6,7 +6,14 @@ it uses .xml files, the same method many distros use for creating dynamic backgr
 ## usage:
 ```./gnome-animated-background.sh -t n path/to/image1.png -t n path/to/image2.png``` <br><br>
 example: <br>
-```./gnome-animated-background.sh -t 1 ./nyancat1.png ./nyancat2.png ./nyancat3.png ./nyancat4.png ./nyancat5.png ./nyancat6.png```
+```./gnome-animated-background.sh -t 1 ./nyancat1.png ./nyancat2.png ./nyancat3.png ./nyancat4.png ./nyancat5.png ./nyancat6.png```<br><br>
+
+
+
+https://user-images.githubusercontent.com/15455108/133535832-40b10361-fe4b-40fb-8090-777f311051b5.mp4
+
+
+
 
 
 
