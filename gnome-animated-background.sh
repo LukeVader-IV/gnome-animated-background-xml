@@ -25,7 +25,7 @@ framenum=0
 
 #for every argument
 for var in "$@"; do
-	echo "yes"
+	#echo "yes"
 
 	let gettime
 
@@ -40,7 +40,7 @@ for var in "$@"; do
 		duration=$var
 
 	elif [ -f $var ]; then
-		echo "image exists"
+		#echo "image exists"
 
 		#check file extension for filtype
 		if [[ "$var" == *.png ]]; then
