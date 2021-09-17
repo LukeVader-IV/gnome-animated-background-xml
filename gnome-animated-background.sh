@@ -76,7 +76,18 @@ done
 ((framenum++))
 echo "</background>" >> /home/$user/.local/share/backgrounds/$filename.xml
 
-dconf write /org/gnome/desktop/background/picture-uri "'file:///home/$user/.local/share/backgrounds/$filename.xml'"
+while [ "$answerstate" == 0 ]; do
+        echo "do you want to apply this background (y/n):"
+        read answer
+        if [ "$answer" = "y" ]; then
+                dconf write /org/gnome/desktop/background/picture-uri "'file:///home/$user/.local/share/backgrounds/$filename.xml'"
+                answerstate=1
+        elif [ "$answer" = "n" ]; then
+                answerstate=1
+        else
+            	echo "not a valid option, try again"
+        fi
+done
 
 checkap=$(dconf read /org/gnome/desktop/background/picture-uri)
 echo $checkap
