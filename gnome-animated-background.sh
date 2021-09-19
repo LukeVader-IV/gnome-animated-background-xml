@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#defaults to avoid breaking without specifying options
 option=zoom
 duration=4
 
@@ -18,6 +19,7 @@ read filename
 
 
 #create file with start of .xml file
+rm -f /home/$USER/.local/share/backgrounds/$filename.xml
 echo "<background>" > /home/$USER/.local/share/backgrounds/$filename.xml
 
 #create start of temporary file for gnome-background-properties
@@ -161,7 +163,7 @@ while [ "$answerstate" = 0 ]; do
 	read answer
 	if [ "$answer" == "y" ]; then
 		answerstate=1
-		sudo cp ./prop.$filename.xml /usr/share/gnome-background-properties/$filename.xml
+		sudo rm -f /usr/share/gnome-background-properties/$filename.xml && sudo cp ./prop.$filename.xml /usr/share/gnome-background-properties/$filename.xml
 		rm ./prop.$filename.xml
 		echo "added to gnome-background-properties"
 	elif [ "$answer" == "n" ]; then
