@@ -7,7 +7,6 @@ if [ "$#" == 0 ]; then
 	exit
 fi
 
-user=$(whoami)
 
 #ask for filename & create .xml file
 echo "filename (ex: nyancat)"
@@ -15,7 +14,7 @@ read filename
 
 
 #create file with start of .xml file
-echo "<background>" > /home/$user/.local/share/backgrounds/$filename.xml
+echo "<background>" > /home/$USER/.local/share/backgrounds/$filename.xml
 
 #create start of temporary file for gnome-background-properties
 cat << EOF > ./prop.$filename.xml
@@ -24,7 +23,7 @@ cat << EOF > ./prop.$filename.xml
 <wallpapers>
   <wallpaper deleted="false">
           <name>$filename</name>
-          <filename>/home/$user/.local/share/backgrounds/$filename.xml</filename>
+          <filename>/home/$USER/.local/share/backgrounds/$filename.xml</filename>
           <options>zoom</options>
           <shade_type>solid</shade_type>
   </wallpaper>
@@ -54,27 +53,27 @@ for var in "$@"; do
 		#echo "image exists"
 
 		#check file extension for filtype
-		if [[ "$var" == *.png ]]; then
+		if [[ "$var" == *.png ]] || [[ "$var" == *.PNG ]] ; then
 			filetype=png
-		elif [[ "$var" == *.jpeg ]]; then
-                	filetype=jpeg
-                elif [[ "$var" == *.gif ]]; then
-                	filetype=gif
-                else
+		elif [[ "$var" == *.jpeg ]] || [[ "$var" == *.JPEG ]]; then
+			filetype=jpeg
+		elif [[ "$var" == *.gif ]] || [[ "$var" == *.GIF ]]; then
+			filetype=gif
+		else
 		echo "ERROR: error on file $var"
 		echo "unknown filetype? if you are confident this is an image that should work as a background please create an issue on GitHub"
 		echo "currently recognised file formats: png, jpeg, gif (not animated)"
 		exit
 		fi
 
-		cp $var /home/$user/.local/share/backgrounds/$filename.$framenum.$filetype
+		cp $var /home/$USER/.local/share/backgrounds/$filename.$framenum.$filetype
 
 		#add image to main .xml file
-cat << EOF >> /home/$user/.local/share/backgrounds/$filename.xml
+cat << EOF >> /home/$USER/.local/share/backgrounds/$filename.xml
 
 <static>
 <duration>$duration</duration>
-<file>/home/$user/.local/share/backgrounds/$filename.$framenum.$filetype</file>
+<file>/home/$USER/.local/share/backgrounds/$filename.$framenum.$filetype</file>
 </static>
 EOF
 
@@ -83,7 +82,7 @@ cat << EOF >> ./prop.$filename.xml
 
   <wallpaper deleted="false">
           <name>$filename.$framenum</name>
-          <filename>/home/$user/.local/share/backgrounds/$filename.$framenum.$filetype</filename>
+          <filename>/home/$USER/.local/share/backgrounds/$filename.$framenum.$filetype</filename>
           <options>zoom</options>
           <shade_type>solid</shade_type>
   </wallpaper>
@@ -102,7 +101,7 @@ done
 
 
 #finish both main .xml and prop .xml
-echo "</background>" >> /home/$user/.local/share/backgrounds/$filename.xml
+echo "</background>" >> /home/$USER/.local/share/backgrounds/$filename.xml
 echo "</wallpapers>" >> ./prop.$filename.xml
 
 #ask if user wants to apply .xml file as background
@@ -112,7 +111,7 @@ while [ "$answerstate" == 0 ]; do
 	echo "do you want to apply this background (y/n):"
 	read answer
 	if [ "$answer" = "y" ]; then
-		dconf write /org/gnome/desktop/background/picture-uri "'file:///home/$user/.local/share/backgrounds/$filename.xml'"
+		dconf write /org/gnome/desktop/background/picture-uri "'file:///home/$USER/.local/share/backgrounds/$filename.xml'"
 		answerstate=1
 	elif [ "$answer" = "n" ]; then
 		answerstate=1
@@ -127,11 +126,11 @@ echo $answer
 #check if background was applied
 checkap=$(dconf read /org/gnome/desktop/background/picture-uri)
 echo "current image: $checkap"
-if [ "$checkap" == "'file:///home/$user/.local/share/backgrounds/$filename.xml'" ]; then
+if [ "$checkap" == "'file:///home/$USER/.local/share/backgrounds/$filename.xml'" ]; then
 	echo "animation of $framenum frames created and applied"
 else
 	echo "animation of $framenum frames was created, but was not applied"
-	echo "use dconf to change '/org/gnome/desktop/background/picture-uri' to 'file:///home/$user/.local/share/backgrounds/$filename.xml' manually"
+	echo "use dconf to change '/org/gnome/desktop/background/picture-uri' to 'file:///home/$USER/.local/share/backgrounds/$filename.xml' manually"
 fi
 
 #ask if user wants to add prop file to gnome-background-properties
