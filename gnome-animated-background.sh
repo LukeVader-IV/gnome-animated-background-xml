@@ -1,5 +1,9 @@
 #!/bin/bash
 
+option=zoom
+duration=4
+
+
 #check for arguments
 if [ "$#" == 0 ]; then
 	echo "no frames specified, please add frames"
@@ -24,7 +28,7 @@ cat << EOF > ./prop.$filename.xml
   <wallpaper deleted="false">
           <name>$filename</name>
           <filename>/home/$USER/.local/share/backgrounds/$filename.xml</filename>
-          <options>zoom</options>
+          <options>$option</options>
           <shade_type>solid</shade_type>
   </wallpaper>
 EOF
@@ -83,7 +87,7 @@ cat << EOF >> ./prop.$filename.xml
   <wallpaper deleted="false">
           <name>$filename.$framenum</name>
           <filename>/home/$USER/.local/share/backgrounds/$filename.$framenum.$filetype</filename>
-          <options>zoom</options>
+          <options>$option</options>
           <shade_type>solid</shade_type>
   </wallpaper>
 EOF
@@ -92,6 +96,22 @@ EOF
 	elif [ $var == -t ]; then
 		gettime=1
 		echo "next value is time (get time: $gettime)"
+	
+	elif [ $var == -wallpaper ]; then
+		option=wallpaper
+	
+	elif [ $var == -centered ]; then
+		option=centered
+	
+	elif [ $var == -scaled ]; then
+		option=scaled
+	
+	elif [ $var == -stretched ]; then
+		option=stretched
+	
+	elif [ $var == -spanned ]; then
+		option=spanned
+		
 	else
 		echo "image doesn't exist, skipping image"
 	fi
@@ -112,6 +132,7 @@ while [ "$answerstate" == 0 ]; do
 	read answer
 	if [ "$answer" = "y" ]; then
 		dconf write /org/gnome/desktop/background/picture-uri "'file:///home/$USER/.local/share/backgrounds/$filename.xml'"
+		dconf write /org/gnome/desktop/background/picture-options "'$option'"
 		answerstate=1
 	elif [ "$answer" = "n" ]; then
 		answerstate=1
