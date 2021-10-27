@@ -15,15 +15,15 @@ fi
 
 #ask for filename & create .xml file
 echo "filename (ex: nyancat)"
-read filename
+read -r filename
 
 
 #create file with start of .xml file
-rm -f /home/$USER/.local/share/backgrounds/$filename.xml
-echo "<background>" > /home/$USER/.local/share/backgrounds/$filename.xml
+rm -f /home/"$USER"/.local/share/backgrounds/"$filename".xml
+echo "<background>" > /home/"$USER"/.local/share/backgrounds/"$filename".xml
 
 #create start of temporary file for gnome-background-properties
-cat << EOF > ./prop.$filename.xml
+cat << EOF > ./prop."$filename".xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
 <wallpapers>
@@ -43,19 +43,19 @@ for var in "$@"; do
 	echo "yes"
 
 	#variable to determine of the next argument is the duration
-	let gettime
+	(( gettime))
 
 	if [ "$gettime" == "1" ]; then
 
 		#set the duration of the image in seconds
 		echo "$var seconds per image"
-		if [ "$var" < 1 ]; then
+		if [ "$var" -lt 1 ]; then
 			echo "gnome refreshes it's background once per second, be aware that this means images will be skipped with a duration of less then 1 second"
 		fi
 		gettime=0
 		duration=$var
 
-	elif [ -f $var ]; then
+	elif [ -f "$var" ]; then
 		#echo "image exists"
 
 		#check file extension for filtype
@@ -72,10 +72,10 @@ for var in "$@"; do
 		exit
 		fi
 
-		cp $var /home/$USER/.local/share/backgrounds/$filename.$framenum.$filetype
+		cp "$var" /home/"$USER"/.local/share/backgrounds/"$filename".$framenum.$filetype
 
 		#add image to main .xml file
-cat << EOF >> /home/$USER/.local/share/backgrounds/$filename.xml
+cat << EOF >> /home/"$USER"/.local/share/backgrounds/"$filename".xml
 
 <static>
 <duration>$duration</duration>
@@ -84,7 +84,7 @@ cat << EOF >> /home/$USER/.local/share/backgrounds/$filename.xml
 EOF
 
 		#add image to temporary prop file
-cat << EOF >> ./prop.$filename.xml
+cat << EOF >> ./prop."$filename".xml
 
   <wallpaper deleted="false">
           <name>$filename.$framenum</name>
@@ -95,43 +95,42 @@ cat << EOF >> ./prop.$filename.xml
 EOF
 		((framenum++))
 
-	elif [ $var == -t ]; then
+	elif [ "$var" == "-t" ]; then
 		gettime=1
 		echo "next value is time (get time: $gettime)"
 	
-	elif [ $var == -wallpaper ]; then
+	elif [ "$var" == "-wallpaper" ]; then
 		option=wallpaper
 	
-	elif [ $var == -centered ]; then
+	elif [ "$var" == "-centered" ]; then
 		option=centered
 	
-	elif [ $var == -scaled ]; then
+	elif [ "$var" == "-scaled" ]; then
 		option=scaled
 	
-	elif [ $var == -stretched ]; then
+	elif [ "$var" == "-stretched" ]; then
 		option=stretched
 	
-	elif [ $var == -spanned ]; then
+	elif [ "$var" == "-spanned" ]; then
 		option=spanned
 		
 	else
 		echo "image doesn't exist, skipping image"
 	fi
-
 done
 ((framenum++))
 
 
 #finish both main .xml and prop .xml
-echo "</background>" >> /home/$USER/.local/share/backgrounds/$filename.xml
-echo "</wallpapers>" >> ./prop.$filename.xml
+echo "</background>" >> /home/"$USER"/.local/share/backgrounds/"$filename".xml
+echo "</wallpapers>" >> ./prop."$filename".xml
 
 #ask if user wants to apply .xml file as background
 answer=a
 answerstate=0
 while [ "$answerstate" == 0 ]; do
 	echo "do you want to apply this background (y/n):"
-	read answer
+	read -r answer
 	if [ "$answer" = "y" ]; then
 		dconf write /org/gnome/desktop/background/picture-uri "'file:///home/$USER/.local/share/backgrounds/$filename.xml'"
 		dconf write /org/gnome/desktop/background/picture-options "'$option'"
@@ -144,7 +143,7 @@ while [ "$answerstate" == 0 ]; do
 done
 
 echo $answerstate
-echo $answer
+echo "$answer"
 
 #check if background was applied
 checkap=$(dconf read /org/gnome/desktop/background/picture-uri)
@@ -160,14 +159,14 @@ fi
 answerstate=0
 while [ "$answerstate" = 0 ]; do
 	echo "do you want to add this background to gnome-background properties, this will cause the background to show up in the settings app (y/n):"
-	read answer
+	read -r answer
 	if [ "$answer" == "y" ]; then
 		answerstate=1
-		sudo rm -f /usr/share/gnome-background-properties/$filename.xml && sudo cp ./prop.$filename.xml /usr/share/gnome-background-properties/$filename.xml
-		rm ./prop.$filename.xml
+		sudo rm -f /usr/share/gnome-background-properties/"$filename".xml && sudo cp ./prop."$filename".xml /usr/share/gnome-background-properties/"$filename".xml
+		rm ./prop."$filename".xml
 		echo "added to gnome-background-properties"
 	elif [ "$answer" == "n" ]; then
-		rm ./prop.$filename.xml
+		rm ./prop."$filename".xml
 		echo "not added"
 		exit
 	else
