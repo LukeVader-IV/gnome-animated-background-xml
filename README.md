@@ -23,7 +23,7 @@ https://user-images.githubusercontent.com/15455108/133536051-4c44bfff-bf48-4562-
 ##### timing <br>
 `-t n` set a time for the upcoming list of images of "n" seconds <br>
 ex: `-t 10800` for 3 hours <br>
-this can be specified on a per-image basis by adding a new duration before each frame <br>
+this is a global value, all frames will stay on screen for the same amount of time
 
 default: 4 seconds per frame <br>
 
