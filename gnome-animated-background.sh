@@ -60,7 +60,7 @@ echo "frame duration: $duration"
 echo "files: ${filenames[*]}"
 
 # check all files for filetype and save in array
-for filecheck in "${filenames[*]"}; do
+for filecheck in "${filenames[*]}"; do
 	if [[ "$filecheck" == *.png ]] || [[ "$filecheck" == *.PNG ]] ; then
 		filetype+=("png")
 	elif [[ "$filecheck" == *.jpeg ]] || [[ "$filecheck" == *.JPEG ]]; then
