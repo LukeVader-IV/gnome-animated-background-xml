@@ -37,7 +37,7 @@ for argument in "$@"; do
 		duration=$argument
 		nextisdur=0
 	else
-		for isvalid in ${validoptions[*]}; do
+		for isvalid in "${validoptions[@]}"; do
 			if [ "$argument" == "-$isvalid" ]; then
 				option=$isvalid
 			fi
@@ -52,7 +52,7 @@ if [ ${#filenames[@]} == 0 ]; then
 fi
 
 for i in "${filenames[@]}"; do
-	echo $i
+	echo "$i"
 done
 
 echo "option: $option"
@@ -60,7 +60,7 @@ echo "frame duration: $duration"
 echo "files: ${filenames[*]}"
 
 # check all files for filetype and save in array
-for filecheck in "${filenames[*]}"; do
+for filecheck in "${filenames[@]}"; do
 	if [[ "$filecheck" == *.png ]] || [[ "$filecheck" == *.PNG ]] ; then
 		filetype+=("png")
 	elif [[ "$filecheck" == *.jpeg ]] || [[ "$filecheck" == *.JPEG ]] || [[ "$filecheck" == *.jpg ]] || [[ "$filecheck" == *.JPG ]]; then
@@ -106,7 +106,7 @@ echo "</background>" >> /home/"$USER"/.local/share/backgrounds/"$filename".xml
 
 while [ "$appearingnome" != "y" ] && [ "$appearingnome" != "n" ]; do
 	echo "do you wish for this animation to appear in gnome-settings? (y/n)"
-	read appearingnome
+	read -r appearingnome
 	if [ "$appearingnome" != "y" ] && [ "$appearingnome" != "n" ]; then
 		echo "invalid input, please try again"
 	fi
@@ -116,7 +116,7 @@ done
 if [ "$appearingnome" == "y" ]; then
 	while [ "$appearingnomeall" != "y" ] && [ "$appearingnomeall" != "n" ]; do
 	echo "do you wish for all images to appear in gnome-settings? (y/n)"
-	read appearingnomeall
+	read -r appearingnomeall
 	done
 fi
 
