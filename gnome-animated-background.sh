@@ -63,7 +63,7 @@ echo "files: ${filenames[*]}"
 for filecheck in "${filenames[*]}"; do
 	if [[ "$filecheck" == *.png ]] || [[ "$filecheck" == *.PNG ]] ; then
 		filetype+=("png")
-	elif [[ "$filecheck" == *.jpeg ]] || [[ "$filecheck" == *.JPEG ]]; then
+	elif [[ "$filecheck" == *.jpeg ]] || [[ "$filecheck" == *.JPEG ]] || [[ "$filecheck" == *.jpg ]] || [[ "$filecheck" == *.JPG ]]; then
 		filetype+=("jpeg")
 	elif [[ "$filecheck" == *.gif ]] || [[ "$filecheck" == *.GIF ]]; then
 		filetype+=("gif")
