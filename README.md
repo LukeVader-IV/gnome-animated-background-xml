@@ -23,9 +23,14 @@ https://user-images.githubusercontent.com/15455108/133536051-4c44bfff-bf48-4562-
 ##### timing <br>
 `-t n` set a time for the upcoming list of images of "n" seconds <br>
 ex: `-t 10800` for 3 hours <br>
+ex: `-t 0.03` for 30fps (1/30)
 this is a global value, all frames will stay on screen for the same amount of time
 
 default: 4 seconds per frame <br>
+
+!! for anything below 1seconf per frame, the 
+<a href="https://extensions.gnome.org/extension/4761/speed-background/" >speed background extension</a> 
+is required.
 
 ##### background modes <br>
 
