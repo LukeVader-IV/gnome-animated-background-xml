@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
 #include <unistd.h>
@@ -73,6 +74,15 @@ void printdata(char option[256], float *duration, int *imagecount, char *images[
 	}
 }
 
+void moveimages(char *images[], int imagecount){
+	system("mkdir -p ~/.local/share/backgrounds/.hidden");
+	char command[256];
+	for (int i = 0; i < imagecount; i++){
+		snprintf(command, 256, "cp %s ~/.local/share/backgrounds/.hidden/image%d", images[i], i);
+		system(command);
+		/* printf("%s\n", command); */
+	}
+}
 
 int writexml(char option[256], float duration, int imagecount, char *images[]){
 	char filename[256];

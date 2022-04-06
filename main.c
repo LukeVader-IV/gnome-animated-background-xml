@@ -33,7 +33,8 @@ gint main (gint argc, gchar *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	system("mkdir -p ~/.local/share/backgrounds/.hidden");
+	moveimages(images, imagecount);
+
 
 	/* printf("%s\n", option); */
    /* imagecount = inputparser(&option[], &duration, &images, argc, argv); */
