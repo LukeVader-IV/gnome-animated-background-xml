@@ -5,6 +5,7 @@ it uses .xml files, the same method many distros use for creating dynamic backgr
 
 # NOTE:
 this tool does not work with Gnome 42 dark-mode yet, this will be working as soon as the C-lang rewrite is finished
+Update: it seems to be inconsistant? if you have this issue, try to delete the background and create it again, that might fix it.
 
 ## usage:
 ```./gnome-animated-background.sh path/to/image1.png path/to/image2.png``` <br>
