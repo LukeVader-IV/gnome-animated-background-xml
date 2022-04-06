@@ -33,6 +33,8 @@ gint main (gint argc, gchar *argv[])
 		exit(EXIT_FAILURE);
 	}
 
+	system("mkdir -p ~/.local/share/backgrounds/.hidden");
+
 	/* printf("%s\n", option); */
    /* imagecount = inputparser(&option[], &duration, &images, argc, argv); */
 
@@ -43,14 +45,3 @@ gint main (gint argc, gchar *argv[])
 	return 0;
 }
 
-/* int inputparser(char *option[256], int *duration, int *images, gint argc, gchar argv[argc]){ */
-/*    int counter = 0; */
-
-/*    for (int i = 0; i < argc; i++){ */
-/* 		if (strcmp(&argv[i], "-t")){ */
-/* 			printf("oui oui"); */
-/* 		} */
-/*    } */
-
-/*    return 0; */
-/* } */
