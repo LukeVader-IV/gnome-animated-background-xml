@@ -82,7 +82,7 @@ int writexml(char option[256], float duration, int imagecount, char *images[]){
 	fprintf(xmlbg, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\n<background>\n\n");
 
 	for (int i = 0; i < imagecount; i++){
-		fprintf(xmlbg, "\t<static>\n\t\t<duration>%f</duration>\n\t\t<image>%s</image>\n\t<static\n\n", duration, images[i]);
+		fprintf(xmlbg, "\t<static>\n\t\t<duration>%f</duration>\n\t\t<image>%s</image>\n\t</static>\n\n", duration, images[i]);
 	}
 
 	fprintf(xmlbg, "</background>\n");
