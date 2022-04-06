@@ -3,6 +3,9 @@
 this is a shell script that creates an animated / dynamic background from a list of images <br>
 it uses .xml files, the same method many distros use for creating dynamic backgrounds that change on time of day or weather
 
+# NOTE:
+this tool does not work with Gnome 42 dark-mode yet, this will be working as soon as the C-lang rewrite is finished
+
 ## usage:
 ```./gnome-animated-background.sh path/to/image1.png path/to/image2.png``` <br>
 ##### example: <br>
