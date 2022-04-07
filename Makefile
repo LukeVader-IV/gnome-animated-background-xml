@@ -15,7 +15,7 @@ $(TARGET): $(SOURCE) $(OBJECTS)
 
 objects/%.o: src/%.c
 	mkdir -p objects
-	gcc -c $^ -o $@
+	gcc -c $^ -o $@ $(GLIBC)
 
 
 clean:
@@ -32,3 +32,4 @@ run: $(TARGET)
 debug: $(SOURCE) src/*
 	gcc -g $^ $(WARNINGS) $(GLIBC)
 	gdb a.out
+

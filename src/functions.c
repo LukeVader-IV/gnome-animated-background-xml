@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <glib.h>
+#include <unistd.h>
 #include <stdbool.h>
 #include <unistd.h>
 
@@ -53,7 +55,7 @@ int inputparser(char option[256], float *duration, int *imagecount, char *images
 		} else if (!access(arguments[i], R_OK)) {
 			images[(*imagecount)] = arguments[i];
 			(*imagecount)++;
-			printf("%d yes\n%s", *imagecount, arguments[i]);
+				/* printf("\"%s\" is not a regular file\n", arguments[i]); */
 		} else {
 			char response = 'n';
 			printf("unknown argument: %s (maybe add \" \" if name contains special characters; --help for help)\n", arguments[i]);
@@ -87,18 +89,38 @@ void moveimages(char *images[], int imagecount){
 int writexml(char option[256], float duration, int imagecount, char *images[]){
 	char filename[256];
 	/* scanf("%s", option); */
+	char username[256]; getlogin_r(username, 256);
 
 	FILE *xmlbg; xmlbg = fopen("animatedbg.xml" , "w");
 	fprintf(xmlbg, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n\n<background>\n\n");
 
 	for (int i = 0; i < imagecount; i++){
-		fprintf(xmlbg, "\t<static>\n\t\t<duration>%f</duration>\n\t\t<image>%s</image>\n\t</static>\n\n", duration, images[i]);
+		fprintf(xmlbg, "\t<static>\n\t\t<duration>%f</duration>\n\t\t<image>/home/%s/.local/share/backgrounds/.hidden/image%d</image>\n\t</static>\n\n", duration, username, i);
 	}
 
 	fprintf(xmlbg, "</background>\n");
-
 	fclose(xmlbg);
+
+	system("mv ./animatedbg.xml ~/.local/share/baackgrounds/");
 
 	return 0;
 }
 
+void writeindex(){
+	char username[256]; getlogin_r(username, 256);
+	FILE *xmlindex; xmlindex = fopen("animatedbgindex.xml" , "w");
+	fprintf(xmlindex, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
+			        "<!DOCKTYPE wallpapers SYSTEM \"gnome-wp-list.dtd\">\n\n"
+	              "<wallpapers>\n"
+	              	"\t<wallpaper deleted=\"false\">\n"
+	              		"\t\t<name>animatedbg</name>\n"
+	              		"\t\t<filename>/home/%s/.local/share/backgrounds/animatedbg.xml</filename>\n"
+	              		"\t\t<options>zoom</options>\n"
+	              		"\t\t<shade_type>solid</shade_type>\n"
+	              	"\t</wallpaper>\n"
+	              "</wallpapers>\n"
+			  , username);
+	fclose(xmlindex);
+
+	system("sudo mv ./animatedbgindex.xml /usr/share/gnome-background-properties/");
+}

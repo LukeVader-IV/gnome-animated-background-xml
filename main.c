@@ -26,7 +26,6 @@ gint main (gint argc, gchar *argv[])
    float duration = 4;
    int imagecount = 0;
    char *images[256];
-	/* bool timeset = false; */
 
 
 	if (inputparser(option, &duration, &imagecount, images, argv, argc) == 1){
@@ -42,6 +41,8 @@ gint main (gint argc, gchar *argv[])
 	/* printdata(option, &duration, &imagecount, images, argv, argc); */
 
 	writexml(option, duration, imagecount, images);
+
+	writeindex();
 
 	return 0;
 }
