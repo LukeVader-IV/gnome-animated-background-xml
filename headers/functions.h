@@ -11,8 +11,8 @@ void printdata(char option[256], float *duration, int *imagecount, char *images[
 
 int writexml(char option[256], float duration, int imagecount, char *images[]);
 
-void moveimages(char *images[], int imagecount);
+int moveimages(char *images[], int imagecount);
 
-void writeindex();
+int writeindex();
 
 #endif

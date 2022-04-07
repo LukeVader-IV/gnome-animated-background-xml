@@ -76,12 +76,15 @@ void printdata(char option[256], float *duration, int *imagecount, char *images[
 	}
 }
 
-void moveimages(char *images[], int imagecount){
+int moveimages(char *images[], int imagecount){
 	system("mkdir -p ~/.local/share/backgrounds/.hidden");
+	int syserrout;
 	char command[256];
 	for (int i = 0; i < imagecount; i++){
 		snprintf(command, 256, "cp %s ~/.local/share/backgrounds/.hidden/image%d", images[i], i);
-		system(command);
+		if ((syserrout = system(command)) != 0){
+			return syserrout;
+		}
 		/* printf("%s\n", command); */
 	}
 }
@@ -101,12 +104,10 @@ int writexml(char option[256], float duration, int imagecount, char *images[]){
 	fprintf(xmlbg, "</background>\n");
 	fclose(xmlbg);
 
-	system("mv ./animatedbg.xml ~/.local/share/baackgrounds/");
-
-	return 0;
+	return system("mv ./animatedbg.xml ~/.local/share/baackgrounds/");
 }
 
-void writeindex(){
+int writeindex(){
 	char username[256]; getlogin_r(username, 256);
 	FILE *xmlindex; xmlindex = fopen("animatedbgindex.xml" , "w");
 	fprintf(xmlindex, "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n"
@@ -122,5 +123,6 @@ void writeindex(){
 			  , username);
 	fclose(xmlindex);
 
-	system("sudo mv ./animatedbgindex.xml /usr/share/gnome-background-properties/");
+	return system("sudo mv ./animatedbgindex.xml /usr/share/gnome-background-properties/");
+
 }

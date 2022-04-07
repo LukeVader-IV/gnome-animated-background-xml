@@ -32,7 +32,10 @@ gint main (gint argc, gchar *argv[])
 		exit(EXIT_FAILURE);
 	}
 
-	moveimages(images, imagecount);
+	if (moveimages(images, imagecount) != 0){
+		printf("an error occurred moving the selected images to ~/.local/share/backgrounds/.hidden/\nplease make sure that the program has write-access to this folder");
+		exit(EXIT_FAILURE);
+	}
 
 
 	/* printf("%s\n", option); */
@@ -40,9 +43,14 @@ gint main (gint argc, gchar *argv[])
 
 	/* printdata(option, &duration, &imagecount, images, argv, argc); */
 
-	writexml(option, duration, imagecount, images);
+	if (writexml(option, duration, imagecount, images) != 0 ){
+		printf("an error occurred moving the .xml file to ~/.local/share/backgrounds/\nplease make sure that the program has write-access to this folder");
+	}
 
-	writeindex();
+	if (writeindex() != 0){
+		printf("there was an error moving the index, please check the program has access to /usr/share/gnome-background-properties");
+		exit(EXIT_FAILURE);
+	}
 
 	return 0;
 }
