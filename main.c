@@ -6,10 +6,25 @@
 
 #include "headers/functions.h"
 
+#define REDBG "\e[41m"
+#define RESET "\e[0m"
+
 gint main (gint argc, gchar *argv[])
 {
 	g_set_prgname ("gnome-animation");
 	g_set_application_name ("gnome-animation");
+
+	/* if (getuid() != geteuid()){ */
+	/* 	printf("\[41m this program is NOT intended to be run under sudo, please retry without sudo"); */
+	/* } */
+	if (geteuid()==0){
+		char response = 'n';
+		printf(REDBG "this program should NOT be run as sudo" RESET ", continue anyway? (y/n)");
+		scanf("%c", &response);
+		if (response != 'y' || response != 'Y'){
+			exit(EXIT_FAILURE);
+		}
+	}
 
 	if (argc == 1){
 		printnoargs(argv[0]);
