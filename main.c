@@ -14,6 +14,8 @@ gint main (gint argc, gchar *argv[])
 	g_set_prgname ("gnome-animation");
 	g_set_application_name ("gnome-animation");
 
+	int store_exit=0;
+
 	/* if (getuid() != geteuid()){ */
 	/* 	printf("\[41m this program is NOT intended to be run under sudo, please retry without sudo"); */
 	/* } */
@@ -43,13 +45,13 @@ gint main (gint argc, gchar *argv[])
    char *images[256];
 
 
-	if (inputparser(option, &duration, &imagecount, images, argv, argc) == 1){
-		exit(EXIT_FAILURE);
+	if ((store_exit=inputparser(option, &duration, &imagecount, images, argv, argc)) == 1){
+		exit(store_exit);
 	}
 
-	if (moveimages(images, imagecount) != 0){
-		printf("an error occurred moving the selected images to ~/.local/share/backgrounds/.hidden/\nplease make sure that the program has write-access to this folder");
-		exit(EXIT_FAILURE);
+	if ((store_exit=moveimages(images, imagecount)) != 0){
+		printf("an error occurred moving the selected images to ~/.local/share/backgrounds/.hidden/\nplease make sure that the program has write-access to this folder\n");
+		exit(store_exit);
 	}
 
 
@@ -58,13 +60,14 @@ gint main (gint argc, gchar *argv[])
 
 	/* printdata(option, &duration, &imagecount, images, argv, argc); */
 
-	if (writexml(option, duration, imagecount, images) != 0 ){
-		printf("an error occurred moving the .xml file to ~/.local/share/backgrounds/\nplease make sure that the program has write-access to this folder");
+	if ((store_exit=writexml(option, duration, imagecount, images)) != 0 ){
+		printf("an error occurred moving the .xml file to ~/.local/share/backgrounds/\nplease make sure that the program has write-access to this folder\n");
+		exit(store_exit);
 	}
 
-	if (writeindex() != 0){
+	if ((store_exit=writeindex()) != 0){
 		printf("there was an error moving the index, please check the program has access to /usr/share/gnome-background-properties");
-		exit(EXIT_FAILURE);
+		exit(store_exit);
 	}
 
 	return 0;
