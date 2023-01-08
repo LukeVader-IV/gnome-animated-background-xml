@@ -54,6 +54,9 @@ if the previously applied background has the same name as the new one, just log 
 otherwise set it manually using this command (replace `$filename` with what you named it): <br>
 `dconf write /org/gnome/desktop/background/picture-uri "'file:///home/$USER/.local/share/backgrounds/$filename.xml'"` <br>
 
+#### pkexec is not working: <br>
+use argument --sudo or -s to use sudo instead of pkexec
+
 #### my desktop environment refuses to load:
 this means something f-ed up with the .xml file,  this can be fixed by temporarily replacing the background with another image: <br>
 

@@ -12,6 +12,7 @@ fi
 option=zoom
 duration=4
 validoptions=("wallpaper" "centered" "scaled" "stretched" "spanned" "zoom")
+privilidge=pkexec
 
 if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
 	echo "this is the help page for $0"
@@ -23,6 +24,7 @@ if [ "$1" == "--help" ] || [ "$1" == "-h" ]; then
 	echo "-${validoptions[3]}      stretched background mode"
 	echo "-${validoptions[4]}        spanned background mode"
 	echo -e "-${validoptions[5]}           zoom background mode      [default]\n"
+	echo -e "\ntrouble with pkexec? use --sudo or -s to use sudo instead\n"
 	exit
 fi
 
@@ -36,6 +38,9 @@ for argument in "$@"; do
 	elif [ "$nextisdur" == 1 ]; then
 		duration=$argument
 		nextisdur=0
+	elif [ "$argument" == "-s" ] || [ "$argument" == "--sudo" ]; then
+		echo "using sudo"
+		privilidge=sudo
 	else
 		for isvalid in "${validoptions[@]}"; do
 			if [ "$argument" == "-$isvalid" ]; then
@@ -148,7 +153,7 @@ EOF
 done
 fi
 echo "</wallpapers>" >> ./prop."$filename".xml
-sudo mv ./prop."$filename".xml /usr/share/gnome-background-properties/"$filename".xml
+$privilidge mv ./prop."$filename".xml /usr/share/gnome-background-properties/"$filename".xml
 fi
 
 #does user want to apply background
