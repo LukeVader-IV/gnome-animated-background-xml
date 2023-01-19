@@ -13,9 +13,10 @@ int main (int argc, char *argv[]){
 	if (framecount < 1){
 		return framecount;
 	}
-	for (int i = 0; i<framecount; i++){
-		printf("%s : %.2fs : scale %d\n", images[i], timings[i], scaling[i]);
-	}
+	mvfile(framecount, images);
+	/* for (int i = 0; i<framecount; i++){ */
+	/* 	printf("%s : %.2fs : scale %d\n", images[i], timings[i], scaling[i]); */
+	/* } */
 
 	printf("%s\n", xml_string(framecount, images, timings, scaling));
 
