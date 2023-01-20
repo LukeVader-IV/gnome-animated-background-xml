@@ -19,12 +19,12 @@ bool mvfile(int framecount, char** images){
 	FILE *currinput;
 	FILE *curroutput;
 	char* outname[framecount];
-	char* user = getenv("USER");
+	char* homedir = getenv("HOME");
 	for (int i = 0; i<framecount; i++){
 		outname[i] = malloc(200);
 		currinput = fopen(images[i], "r");
 		//TODO: add filetypes
-		sprintf(outname[i], "/var/home/%s/.local/share/backgrounds/image%d", user, i);
+		sprintf(outname[i], "%s/.local/share/backgrounds/image%d", homedir, i);
 		curroutput = fopen(outname[i], "w+");
 		if (currinput == NULL){
 			printf("input file doesn't exist: %s\n", images[i]);
