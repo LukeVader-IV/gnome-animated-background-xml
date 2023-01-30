@@ -18,13 +18,19 @@ int main (int argc, char *argv[]){
 	if (framecount < 1){
 		return framecount;
 	}
+	char* fname;
 	mvfile(framecount, images);
-	xml_maker(framecount, images, timings, scaling);
+	fname = xml_maker(framecount, images, timings, scaling);
 
 	if (system("ostree --version > /dev/null") == 0){
 		//immutable, uses ostree
+		printf("immutable distros are not yet supported, can't add background to gnome-backgrounds or enable background\n");
 	} else {
 		//classic
+		char command[200];
+		sprintf(command, "dconf write /org/gnome/desktop/background/picture-uri %s", fname);
+		system(command);
+		//TODO: add background to gnome settings
 	}
 
 
