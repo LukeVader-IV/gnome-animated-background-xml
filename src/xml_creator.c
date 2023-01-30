@@ -49,17 +49,17 @@ bool mvfile(int framecount, char** images){
 }
 
 /**
- * function that formats into XML
+ * function that writes the background xml
  *
  * @param framecount amount of images
  * @param images array of all images
  * @param timings array of each frame timing
  * @param scaling array of each frame scaling
  *
- * @return string in xml format, seen as an animated background by gnome
+ * @return string of file name
  */
 
-bool xml_maker(int framecount, char* images[], float* timings, int* scaling){
+char* xml_maker(int framecount, char* images[], float* timings, int* scaling){
 
 	char outname[100];
 	char* homedir = getenv("HOME");
@@ -77,5 +77,5 @@ bool xml_maker(int framecount, char* images[], float* timings, int* scaling){
 	fclose(output);
 	printf("wrote xml to %s\n", outname);
 
-	return true;
+	return outname;
 }
