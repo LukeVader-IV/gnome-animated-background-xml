@@ -70,8 +70,7 @@ bool xml_maker(int framecount, char* images[], float* timings, int* scaling){
 	fprintf(output, "<background>\n");
 
 	for (int i = 0; i < framecount; i++){
-		//TODO: scaling
-		fprintf(output, "\t<static>\n\t\t<duration>%f</duration>\n\t\t<file>%s</file>\n\t</static>\n\n", timings[i], images[i]);
+		fprintf(output, "\t<static>\n\t\t<duration>%f</duration>\n\t\t<file>%s</file>\n\t\t<options>%s</options>\n\t</static>\n\n", timings[i], images[i], getmode(scaling[i]));
 	}
 
 	fprintf(output, "</background>");
