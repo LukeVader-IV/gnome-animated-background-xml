@@ -61,7 +61,7 @@ bool mvfile(int framecount, char** images){
 
 char* xml_maker(int framecount, char* images[], float* timings, int* scaling){
 
-	char outname[100];
+	char* outname = malloc(sizeof(images[0][0]) * 100);
 	char* homedir = getenv("HOME");
 	sprintf(outname, "%s/.local/share/backgrounds/custom_bg.xml", homedir);
 	FILE* output;
