@@ -18,7 +18,7 @@ int main (int argc, char *argv[]){
 	/* 	printf("%s : %.2fs : scale %d\n", images[i], timings[i], scaling[i]); */
 	/* } */
 
-	printf("%s\n", xml_string(framecount, images, timings, scaling));
+	xml_maker(framecount, images, timings, scaling);
 
 	return 0;
 }

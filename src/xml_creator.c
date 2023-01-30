@@ -59,22 +59,24 @@ bool mvfile(int framecount, char** images){
  * @return string in xml format, seen as an animated background by gnome
  */
 
-char* xml_string(int framecount, char* images[], float* timings, int* scaling){
-	int totalsize = 0;
-	for (int i = 0; i < framecount; i++){
-		totalsize += sizeof(images[i]) + sizeof(timings[i]) + sizeof(getmode(scaling[i])) + 200;
-	}
+bool xml_maker(int framecount, char* images[], float* timings, int* scaling){
 
-	char* output = malloc(totalsize);
+	char outname[100];
+	char* homedir = getenv("HOME");
+	sprintf(outname, "%s/.local/share/backgrounds/custom_bg.xml", homedir);
+	FILE* output;
+	output = fopen(outname, "w+");
 
-	sprintf(output, "<background>\n");
+	fprintf(output, "<background>\n");
 
 	for (int i = 0; i < framecount; i++){
 		//TODO: scaling
-		sprintf(output, "%s\t<static>\n\t\t<duration>%f</duration>\n\t\t<file>%s</file>\n\t</static>\n\n", output, timings[i], images[i]);
+		fprintf(output, "\t<static>\n\t\t<duration>%f</duration>\n\t\t<file>%s</file>\n\t</static>\n\n", timings[i], images[i]);
 	}
 
-	sprintf(output, "%s</background>", output);
+	fprintf(output, "</background>");
+	fclose(output);
+	printf("wrote xml to %s\n", outname);
 
-	return output;
+	return true;
 }
